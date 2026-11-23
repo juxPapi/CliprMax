@@ -1,0 +1,6 @@
+{
+  "name": "CliprMax",
+  "description": "CliprMax watches your Twitch, Kick, and YouTube streams or uploads, finds the moments worth posting, and exports fast 1080p60 & 720p60 clips completely free.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

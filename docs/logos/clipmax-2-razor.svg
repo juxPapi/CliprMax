@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="clipmax-razor-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9146FF" />
+      <stop offset="100%" stop-color="#53FC18" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="32" fill="#0A0A0A" />
+  <path d="M82 32.8C75.6 28.4 68 26 59.2 26C38.8 26 24 41.6 24 64C24 86.4 38.8 102 59.2 102C68 102 75.6 99.6 82 95.2L71.6 81.6C68 84 64 85.2 59.6 85.2C48.8 85.2 42.4 76.8 42.4 64C42.4 51.2 48.8 42.8 59.6 42.8C64 42.8 68 44 71.6 46.4L82 32.8Z" fill="#FFFFFF" />
+  <path d="M78 44.8L108 64L78 83.2V44.8Z" fill="url(#clipmax-razor-grad)" />
+</svg>

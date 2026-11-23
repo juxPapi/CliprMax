@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  --bg-canvas: #fafaf8;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f3f2ee;
+  --ink-primary: #0a0a0a;
+  --ink-secondary: #52525b;
+  --ink-muted: #71717a;
+  --border-hairline: rgba(10, 10, 10, 0.08);
+  --border-strong: rgba(10, 10, 10, 0.16);
+  --accent-twitch: #9146ff;
+  --accent-kick: #53fc18;
+  --accent-kick-ink: #175c05;
+  --accent-youtube: #e5173f;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html,
+body {
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Soft editorial ambient header wash inspired by cliprai.app */
+.clipr-ambient-wash {
+  background:
+    radial-gradient(62% 55% at 18% 12%, rgba(255, 221, 225, 0.58) 0%, rgba(255, 221, 225, 0) 68%),
+    radial-gradient(58% 55% at 86% 18%, rgba(212, 225, 255, 0.62) 0%, rgba(212, 225, 255, 0) 68%),
+    radial-gradient(48% 42% at 52% 0%, rgba(235, 224, 255, 0.42) 0%, rgba(235, 224, 255, 0) 70%),
+    #fafaf8;
+}
+
+/* Subtle iridescent slider pill sheen for the hero CTA */
+.clipr-slide-track {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 232, 240, 0.9) 0%,
+    rgba(243, 244, 255, 0.95) 48%,
+    rgba(214, 246, 255, 0.9) 100%
+  );
+  border: 1px solid rgba(10, 10, 10, 0.14);
+  box-shadow: 0 8px 28px rgba(10, 10, 10, 0.06);
+}
+
+/* Smooth settling curve */
+.ease-settle {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
