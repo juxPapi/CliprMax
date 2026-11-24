@@ -473,6 +473,93 @@ app.post('/api/clips/auto-edit', async (req, res) => {
   }
 });
 
+// Whisper Transcription (Free, local Whisper.cpp)
+app.post('/api/clips/transcribe', async (req, res) => {
+  try {
+    const { clip, model = 'base', language = 'auto' } = req.body as {
+      clip?: ClipCandidate;
+      model?: 'tiny' | 'base' | 'small' | 'medium' | 'large';
+      language?: string;
+    };
+    if (!clip) return res.status(400).json({ error: 'Clip payload is required.' });
+
+    const project = getProject(clip.streamId);
+    const sourcePath =
+      clip.localFilePath ||
+      project?.stream.localFilePath ||
+      (clip.platform === 'sample' ? await ensureSampleStreamFile('irl') : undefined);
+
+    if (!sourcePath) {
+      return res.status(400).json({ error: 'No source file available for transcription.' });
+    }
+
+    const { execFile } = await import('child_process');
+    const { promisify } = await import('util');
+    const execFileAsync = promisify(execFile);
+
+    // Check if whisper.cpp is available
+    let whisperBin = 'whisper-cli';
+    try {
+      await execFileAsync('which', ['whisper-cli']);
+    } catch {
+      whisperBin = 'whisper';
+    }
+
+    const outputFile = `/tmp/whisper_${Date.now()}.txt`;
+
+    await execFileAsync(
+      whisperBin,
+      [
+        '-m',
+        `models/ggml-${model}.bin`,
+        '-f',
+        sourcePath,
+        '-of',
+        outputFile.replace('.txt', ''),
+        '-otxt',
+        language === 'auto' ? '-l auto' : `-l ${language}`,
+      ],
+      { maxBuffer: 8 * 1024 * 1024, timeout: 300000 },
+    );
+
+    const fs = await import('fs');
+    const transcript = fs.readFileSync(`${outputFile.replace('.txt', '')}.txt`, 'utf-8');
+
+    // Parse the timestamped transcript
+    const segments: Array<{ startSec: number; endSec: number; text: string }> = [];
+    const lines = transcript.split('\n');
+    for (const line of lines) {
+      const match = line.match(/\[(\d{2}:\d{2}:\d{2}\.\d{3}) --> (\d{2}:\d{2}:\d{2}\.\d{3})\]\s+(.*)/);
+      if (match) {
+        const startSec = parseTimestamp(match[1]);
+        const endSec = parseTimestamp(match[2]);
+        const text = match[3];
+        segments.push({ startSec, endSec, text });
+      }
+    }
+
+    res.json({ segments, fullText: transcript });
+  } catch (err) {
+    const errMsg = err instanceof Error ? err.message : 'Transcription failed.';
+    if (errMsg.includes('whisper-cli') || errMsg.includes('whisper')) {
+      res.status(500).json({
+        error: 'Whisper.cpp not found. Install it from https://github.com/ggerganov/whisper.cpp',
+        hint: 'Install whisper.cpp and ensure whisper-cli is in your PATH',
+      });
+    } else {
+      res.status(500).json({ error: errMsg });
+    }
+  }
+});
+
+function parseTimestamp(ts: string): number {
+  const parts = ts.split(':');
+  const h = parseInt(parts[0], 10);
+  const m = parseInt(parts[1], 10);
+  const s = parseFloat(parts[2]);
+  return h * 3600 + m * 60 + s;
+}
+
 // Ask CliprMax (plain-English editing)
 app.post(['/api/clips/ask-cliprmax', '/api/clips/ask-clipmax', '/api/clips/ask-clipr'], async (req, res) => {
   try {

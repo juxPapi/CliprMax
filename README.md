@@ -27,6 +27,15 @@ Free, fast full-stack stream clipping studio for **Twitch**, **Kick**, **YouTube
   - **Export Quality Preset Dropdown**: Switch between **`Standard 1080p60`**, **`Standard 720p60`**, **`High Quality (1080p60)`** (CRF 16, `-preset faster`, 256k audio), **`Streaming Optimized (1080p60)`** (6 Mbps VBV, 2s keyframes), and **`Small File Size (720p30)`** (CRF 27, 30fps, compact bitrate).
   - **Live Render Progress Bar & ETA**: Streams real-time FFmpeg `-progress pipe:1` (`out_time_us` & encode speed) over NDJSON (`POST /api/clips/export`), showing live percentage (`%`), stage label, and estimated seconds remaining in `ClipEditor`.
 - **Projects Library**: Persists scanned clips, AI-generated thumbnails, project metadata, and downloadable MP4 exports (with preset labels) in `data/projects.json`.
+- **UI & UX**:
+  - **Dark Mode Toggle**: Toggle between light and dark themes with persistence; includes accent color picker (Maroon, Emerald, Amber, Rose, Indigo, Sky).
+  - **Audio Waveform Visualization**: Live waveform display below the video preview with per-frame amplitude bars.
+  - **Face Tracking Visualization**: Face detection boxes with confidence labels overlay on the video preview when face tracking is enabled.
+  - **Split View Preview**: Toggle between single and side-by-side split-view output previews.
+  - **Keyboard Shortcuts**: `Space` (play/pause), `←/→` (seek ±5s), `M` (mute), `F` (fullscreen).
+  - **Video Playback Controls**: Full video player with play/pause, scrubber, volume, mute, fullscreen, and error retry.
+- **Whisper Transcription (`POST /api/clips/transcribe`)**: Transcribe audio from any clip segment using `whisper-cli`. Returns timestamped segments with full text.
+- **Projects Library**: Persists scanned clips, AI-generated thumbnails, project metadata, and downloadable MP4 exports (with preset labels) in `data/projects.json`.
 
 ---
 

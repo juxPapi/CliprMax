@@ -2,6 +2,32 @@
 
 All notable changes to **CliprMax** are documented in this file.
 
+## [0.6.0] - 2026-11-24
+
+### Added
+- **Dark Mode & Accent Colors (`src/components/Navbar.tsx`, `src/shared/theme.ts`, `src/App.tsx`)**: Added light/dark mode toggle with per-user preference, plus 6 accent color options (maroon, emerald, amber, rose, indigo, sky). Theme persists across sessions.
+- **Face Tracking Visualization (`src/components/studio/ClipEditor.tsx`)**: Face detection bounding boxes with confidence labels overlay on the preview canvas when Face Tracking is enabled. Real-time face tracking updates at ~15fps.
+- **Audio Waveform Visualization (`ClipEditor.tsx`)**: Low-frequency audio waveform rendered below the video preview with dynamic amplitude bars.
+- **Keyboard Shortcuts** (`ClipEditor.tsx`): Space (play/pause), ←/→ (seek ±5s), M (mute), F (fullscreen) with on-screen shortcut hints.
+- **Split View Toggle (`ClipEditor.tsx`)**: Added Split/Single view toggle button to the Output Preview panel for side-by-side format comparison.
+- **Whisper Transcription (`server.ts`)**: New `POST /api/clips/transcribe` endpoint that extracts audio from any clip segment and transcribes it using `whisper-cli`. Returns timestamped segments with full-text.
+- **React Context Theme System (`src/shared/theme.ts`)**: New `ThemeProvider`/`useTheme` hook for centralized dark mode and accent color management across the app.
+
+### Changed
+- **Video Player (`ClipEditor.tsx`)**: Replaced static image placeholder in Output Preview with a live `<video>` element supporting play/pause, seek, mute, and fullscreen. Added video error handling with inline error display and retry button.
+- **ClipEditor Layout** (`ClipEditor.tsx`): Reorganized layout with top Hero section (title, description, pipeline steps), Stats row, Ingest section (link/upload forms), Projects grid, and Studio editor with Preview / Split View / Controls columns.
+- **Auto Edit Button** (`ClipEditor.tsx`): Added auto-edit button that trims dead air using FFmpeg `silencedetect`.
+- **Captions Selector**: Added style selector (Default / Gold / Pop / Glow) for caption styling.
+
+### Fixed
+- **Theme Provider Scope**: Fixed `useTheme` hook scope so `App.tsx` no longer duplicates theme state; `ThemeProvider` wraps entire app now.
+- **Video Playback Errors**: Added `onError` handler to `<video>` element with retry capability.
+
+### Removed
+- None
+
+---
+
 ## [0.5.0] - 2026-11-23
 
 ### Added

@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
+import { ThemeProvider, useTheme } from './shared/theme';
+import type { AppTheme, AccentColor, ThemeMode } from './shared/types';
 import type {
   ClipCandidate,
   ExportedClipRecord,
@@ -149,14 +151,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] text-[#0A0A0A]">
-      <Navbar
-        mode={mode}
-        studioTab={studioTab}
-        onNavigateLanding={scrollToSection}
-        onOpenStudio={openStudio}
-        projectsCount={projects.length}
-      />
+    <ThemeProvider>
+      <div className="min-h-screen bg-[#FAFAF8] text-[#0A0A0A]">
+        <Navbar
+          mode={mode}
+          studioTab={studioTab}
+          onNavigateLanding={scrollToSection}
+          onOpenStudio={openStudio}
+          projectsCount={projects.length}
+        />
 
       {mode === 'landing' ? (
         <main>
@@ -267,5 +270,6 @@ export default function App() {
         </main>
       )}
     </div>
+      </ThemeProvider>
   );
 }
