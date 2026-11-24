@@ -116,29 +116,3 @@ export interface AskCliprEditPatch {
   recommendedQuality?: ExportQuality;
   runAutoEdit?: boolean;
 }
-
-export type ThemeMode = 'light' | 'dark';
-
-export type AccentColor = 'maroon' | 'emerald' | 'amber' | 'rose' | 'indigo' | 'sky';
-
-export interface AppTheme {
-  mode: ThemeMode;
-  accentColor: AccentColor;
-}
-
-export interface TranscriptionSegment {
-  startSec: number;
-  endSec: number;
-  text: string;
-}
-
-export interface TranscribeRequest {
-  clipId: string;
-  model?: 'tiny' | 'base' | 'small' | 'medium' | 'large';
-  language?: string;
-}
-
-export interface TranscribeResponse {
-  segments: TranscriptionSegment[];
-  fullText: string;
-}
